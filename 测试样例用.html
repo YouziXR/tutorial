@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <base href="#" target="_blank">
+    <script type="text/javascript">
+    // document.write(Object.getOwnPropertyNames(Array.prototype));
+    function Person(name) {
+        this.name = name;
+    }
+    // alert(Person.name);
+    p2 = new Person("jack");
+    // document.write(p1.name + "<br />" + p2.name + "<br />" + Person.name);
+    Person.prototype = {
+        constructor: Person,
+        func: function() {
+            alert(this.name);
+        }
+        // body... 
+    };
+    p1 = new Person("steven");
+    // p1.func();
+    var color = new Array("red", "blue");
+    // alert(color.join("|"));
+    function Person(name, age, job) {
+        var o = new Object();
+        o.sayName = function() {
+            alert(name);
+        };
+        return o;
+    }
+    var p1 = Person("steve", 10, "stu");
+    // alert(p1.age);   //无法访问age
+    // p1.sayName();
+    function SuperType(name) {
+        this.name = name;
+        this.color = [1, 2, 3];
+    }
+
+    function SubType(name, age) {
+        SuperType.call(this, name);
+        this.age = age;
+    }
+    // var instance = new SubType("steve" ,10);
+    // alert(instance.name + instance.age);
+    // alert(instance.color);
+    </script>
+</head>
+
+<body>
+    <!-- <div class="editable" id="richedit" contenteditable="true"></div> -->
+    <!-- <div id="division">
+        <div id="myDiv">paragraph</div>
+        <ul id="menu" style="visibility: hidden; background-color: silver;">
+            <li>item 1<a href="http://www.baidu.com">baidu</a></li>
+            <li>item 2</li>
+            <li>item 3</li>
+        </ul>
+    </div> -->
+    <script type="text/javascript">
+    /*{    
+                window.onload = function() {
+                    var menu = document.querySelector("#menu");
+                    var div = document.querySelector("#myDiv");
+                    div.addEventListener("contextmenu", function(event) {
+                        event.preventDefault();
+                        menu.style.left = event.clientX + "px";
+                        menu.style.top = event.clientY + "px";
+                        menu.style.visibility = "visible";
+                    }, false);
+                    document.addEventListener("click", function(event) {
+                        document.querySelector("#menu").style.visibility = "hidden";
+                    }, false);
+                }
+            }*/
+
+    // var divi = document.querySelector("#division");
+    // divi.outerHTML = "<p>hello,world</p>";
+    var book = {
+        title: "first",
+        author: [0, 1, 2],
+        toJSON: function() {
+            return this.title;
+        }
+    };
+    var txt = JSON.stringify(book);
+    // alert(txt);
+    function obj(name) {
+        // this.name = name;
+        // var o = new Object();
+        // o.name = name;
+        // return o;
+        // obj.call(this , name);
+        if (arguments.length == 1) {
+            var o = new Object();
+            o.name = name;
+            return o;
+        }
+    }
+    obj.prototype.name = "name2";
+    var a = obj("name1");
+    var b = new obj;
+    // alert(a.name);
+    // alert(b.name);
+    var data = {
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4
+    };
+    // var ary = Object.keys(data);
+    var ary = Object.keys(data).filter(function(x) {
+        return data[x] > 2;
+    });
+    // alert(ary);
+    /**
+ *@desc: fibonacci
+ *@param: count {Number}
+ *@return: result {Number} 第count个fibonacci值，计数从0开始
+  fibonacci数列为：[1, 1, 2, 3, 5, 8, 13, 21, 34 …]
+  则getNthFibonacci(0)返回值为1
+  则getNthFibonacci(4)返回值为5
+  */
+    function getNthFibonacci(count) {
+        if (count == 0 || count == 1) {
+            return 1;
+        } else {
+            return getNthFibonacci(count - 1) + getNthFibonacci(count - 2);
+        }
+    }
+    var x = [];
+    for (var i = 0; i < 9; i++) {
+        // x[i] = getNthFibonacci(i);
+    }
+    // alert(x);
+    function createFunctions() {
+        var result = [];
+        for (var i = 0; i < 10; i++) {
+            result[i] = function() {
+                return i;
+            }();
+        }
+        return result;
+    }
+    // alert(createFunctions());
+
+    (function() {
+        a = 1;
+        // alert(a);
+        // alert(window.a);
+        var a = 10;
+        // alert(a);
+    })();
+
+    {
+        let o = {
+            p: 42,
+            q: true
+        };
+        let { p, q } = o;
+        // console.log(p + " " + q);
+        let {
+            p: foo,
+            q: bar
+        } = o;
+        // console.log(foo + " " + bar);
+        // console.log(p + " " + q);
+    } {
+        let a = [
+            [1],
+            [2],
+            [3]
+        ];
+        let b = [...a];
+        /*console.log(b.shift());
+        console.log(b.shift());*/
+        // console.log(b.shift());
+        // console.log(a.shift().shift());
+        //调用一次shift()和两次shift()效果一样
+    } {
+        let arr = [1, 2, 3];
+        let arr2 = [...arr]; // 就像是 arr.slice()
+        arr2.push(4);
+        // console.log(arr) // [1, 2, 3, 4]
+        // arr 不受影响    
+    } {
+        let [a, b] = [
+            [1, 2, 3],
+            [4, 5, 6]
+        ]
+        a.push(b);
+        // console.log(a);
+    } {
+        function f() { console.log('I am outside!'); }
+        (function() {
+            if (false) {
+                // 重复声明一次函数f
+                // function f() { console.log('I am inside!'); }
+            }
+            f();
+        }());
+    } {
+        let { foo: baz } = { foo: "aaa", bar: "bbb" };
+        // console.log(baz); // "aaa"
+        // console.log(foo); // error: foo is not defined
+    } {
+        let {foo: bar} = {foo: "bar"};
+        console.log(bar);
+    } {
+        let toThousand = (x) =>{
+        // let x = 10;
+        let str = x.toString();
+        let [...ary] = str;
+        // alert(ary);
+        let count = 0;
+        for (let i = ary.length - 1 ; i > 0; i--) {
+            count++;
+            if(count%3 == 0){
+                ary.splice(i, 0, ",");
+                // count = 0;
+            }
+        }
+        // ary.splice(2, 0, ",");
+        // alert(ary.toString());
+        console.log(ary);
+        // str = ary.toString();
+        // console.log(str);
+        let b = ary.join("");
+        alert(b);
+        }
+        toThousand(123456789);
+    }
+    </script>
+</body>
+
+</html>

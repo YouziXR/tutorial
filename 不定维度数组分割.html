@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var num = [1,2,3,4];
+		var r = num.map(function (item , index , array) {
+			return item*2;
+	// body... 
+});
+		document.write(r);
+		var a = 8;
+		document.write(a.valueOf());
+		/*方法1*/
+		function flatten(arr){
+			var newArr = []
+			function _flat(arr){
+				arr.forEach(val=>{
+					if(Array.isArray(val)){
+						_flat(val)
+					}else{
+						newArr.push(val)
+					}
+				})    
+			}
+			_flat(arr)
+			return newArr
+		}
+
+		/*方法2*/
+
+		function flatten2(arr){
+			return arr.reduce(function(initArr, currentArr)
+			{
+				return initArr.concat(Array.isArray(currentArr)?flatten2(currentArr):currentArr)
+			}, [])
+		}
+
+	</script>
+</body>
+</html>
